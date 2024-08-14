@@ -5,7 +5,7 @@
 <body>
 <header th:replace="fragments/commons::nav"></header>
 <main>
-    <form class="welcome login" action="/login" method="POST" th:object="${authUserDto}">
+    <form class="welcome login" action="/auth/login" method="POST" th:object="${authUserDto}">
 
         <div class="danger" th:if="${#session.getAttribute('errMsg')}">
             <ul>

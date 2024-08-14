@@ -26,7 +26,7 @@ public class AuthenticationController {
     private final UserService userService;
 
     @GetMapping("/login")
-    public String loginPage(HttpSession httpSession, AuthUserDto authUserDto) {
+    public String loginPage(HttpSession httpSession, @ModelAttribute("authUserDto") AuthUserDto authUserDto) {
         return "login";
     }
 
@@ -34,18 +34,18 @@ public class AuthenticationController {
     public String login(@Valid @ModelAttribute("authUserDto") AuthUserDto authUserDto, BindingResult bindingResult, HttpSession httpSession) {
         if (bindingResult.hasErrors()) {
             httpSession.setAttribute("errMsg", bindingResult.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.toList()));
-            return "redirect:/login";
+            return "redirect:/auth/login";
         }
 
         LoggedUserDto user = this.userService.findUser(authUserDto);
 
         if (user == null) {
             httpSession.setAttribute("invalidUser", "Invalid user or password");
-            return "redirect:/login";
+            return "redirect:/auth/login";
         }
 
         httpSession.setAttribute("username", user.getUsername());
-        return "home";
+        return "redirect:/";
     }
 
     @GetMapping("/register")

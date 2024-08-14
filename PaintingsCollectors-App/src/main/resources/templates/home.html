@@ -7,7 +7,9 @@
 <main>
 
     <div class="welcome mt-1 mb-4">
-        <p class="mySticky bg-gray text-dark user">Welcome {userName}</p>
+        <p class="mySticky bg-gray text-dark user" th:if="${#session.getAttribute('username')}">
+            <th:block th:text="'Welcome ' + ${#session.getAttribute('username')}"></th:block>
+        </p>
         <div class="row mt-1 mb-2">
             <div class="col-6 mt-1 mb-1">
                 <div>
