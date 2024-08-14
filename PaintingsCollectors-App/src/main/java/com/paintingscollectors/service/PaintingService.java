@@ -15,5 +15,7 @@ public interface PaintingService {
 
     List<PaintingDto> getOthersPaintings(String username);
 
+    List<PaintingDto> getOwnFavoritePaintings(String username);
+
     void removePainting(String uuid);
 }

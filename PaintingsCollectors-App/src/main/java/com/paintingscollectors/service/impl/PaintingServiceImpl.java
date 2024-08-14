@@ -67,6 +67,13 @@ public class PaintingServiceImpl implements PaintingService {
     }
 
     @Override
+    public List<PaintingDto> getOwnFavoritePaintings(String username) {
+        return Arrays.stream(this.modelMapper
+                        .map(this.paintingRepository.findAllByFavoriteUsersUsername(username), PaintingDto[].class))
+                .toList();
+    }
+
+    @Override
     public void removePainting(String uuid) {
         this.paintingRepository.deleteByUUID(uuid);
     }
