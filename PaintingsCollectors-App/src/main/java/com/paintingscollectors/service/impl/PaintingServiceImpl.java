@@ -52,6 +52,6 @@ public class PaintingServiceImpl implements PaintingService {
 
     @Override
     public void removePainting(String uuid) {
-        this.paintingRepository.deleteById(uuid);
+        this.paintingRepository.deleteByUUID(uuid);
     }
 }
