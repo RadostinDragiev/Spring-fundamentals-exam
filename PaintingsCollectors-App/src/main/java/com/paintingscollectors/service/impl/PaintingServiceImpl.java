@@ -1,6 +1,7 @@
 package com.paintingscollectors.service.impl;
 
 import com.paintingscollectors.model.dto.AddPaintingDto;
+import com.paintingscollectors.model.dto.PaintingDto;
 import com.paintingscollectors.model.entity.Painting;
 import com.paintingscollectors.model.entity.Style;
 import com.paintingscollectors.model.entity.User;
@@ -9,7 +10,11 @@ import com.paintingscollectors.service.PaintingService;
 import com.paintingscollectors.service.StyleService;
 import com.paintingscollectors.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +23,7 @@ public class PaintingServiceImpl implements PaintingService {
     private final PaintingRepository paintingRepository;
     private final UserService userService;
     private final StyleService styleService;
+    private final ModelMapper modelMapper;
 
     @Override
     public void addPainting(AddPaintingDto addPaintingDto) {
@@ -35,5 +41,17 @@ public class PaintingServiceImpl implements PaintingService {
                 .votes(0).build();
 
         this.paintingRepository.saveAndFlush(painting);
+    }
+
+    @Override
+    public List<PaintingDto> getAllByUsername(String username) {
+        return Arrays.stream(this.modelMapper
+                        .map(this.paintingRepository.findAllByAuthorUsername(username), PaintingDto[].class))
+                .toList();
+    }
+
+    @Override
+    public void removePainting(String uuid) {
+        this.paintingRepository.deleteById(uuid);
     }
 }

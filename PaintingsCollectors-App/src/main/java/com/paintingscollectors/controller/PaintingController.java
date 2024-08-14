@@ -9,10 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -26,7 +23,7 @@ public class PaintingController {
     private final SessionUtils sessionUtils;
 
     @GetMapping
-    public String addPaintingPage(HttpSession httpSession, @ModelAttribute()AddPaintingDto addPaintingDto, Model model) {
+    public String addPaintingPage(HttpSession httpSession, @ModelAttribute("addPaintingDto") AddPaintingDto addPaintingDto, Model model) {
         if (httpSession.getAttribute("username") == null) {
             return "redirect:/";
         }
@@ -47,6 +44,12 @@ public class PaintingController {
         this.sessionUtils.clearErrorMessages(httpSession);
 
         this.paintingService.addPainting(addPaintingDto);
+        return "redirect:/";
+    }
+
+    @PostMapping("/remove/{paintingUUID}")
+    public String removePainting(@PathVariable String paintingUUID, HttpSession httpSession) {
+        this.paintingService.removePainting(paintingUUID);
         return "redirect:/";
     }
 }
