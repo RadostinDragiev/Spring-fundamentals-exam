@@ -4,6 +4,7 @@ import com.paintingscollectors.model.dto.AuthUserDto;
 import com.paintingscollectors.model.dto.LoggedUserDto;
 import com.paintingscollectors.model.dto.RegisterUserDto;
 import com.paintingscollectors.service.UserService;
+import com.paintingscollectors.util.SessionUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 public class AuthenticationController {
 
     private final UserService userService;
+    private final SessionUtils sessionUtils;
 
     @GetMapping("/login")
     public String loginPage(HttpSession httpSession, @ModelAttribute("authUserDto") AuthUserDto authUserDto) {
@@ -36,6 +38,7 @@ public class AuthenticationController {
             httpSession.setAttribute("errMsg", bindingResult.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.toList()));
             return "redirect:/auth/login";
         }
+        this.sessionUtils.clearErrorMessages(httpSession);
 
         LoggedUserDto user = this.userService.findUser(authUserDto);
 
@@ -63,6 +66,7 @@ public class AuthenticationController {
                     });
             return "redirect:/auth/register";
         }
+        this.sessionUtils.clearErrorMessages(httpSession);
 
         boolean isUserRegister = this.userService.registerUser(registerUserDto);
         if (!isUserRegister) {

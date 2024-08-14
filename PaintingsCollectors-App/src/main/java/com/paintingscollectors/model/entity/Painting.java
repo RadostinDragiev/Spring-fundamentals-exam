@@ -20,7 +20,9 @@ public class Painting extends BaseEntity {
     @JoinColumn(name = "author", nullable = false)
     private User author;
 
-    // TODO: private Style style;
+    @ManyToOne
+    @JoinColumn(name = "style", nullable = false)
+    private Style style;
 
     @ManyToOne
     @JoinColumn(name = "owner", nullable = false)
