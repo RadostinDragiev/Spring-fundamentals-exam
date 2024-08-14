@@ -14,6 +14,8 @@ public interface PaintingRepository extends JpaRepository<Painting, String> {
 
     List<Painting> findAllByAuthorUsername(String username);
 
+    List<Painting> findAllByAuthorUsernameIsNot(String username);
+
     @Modifying
     @Transactional
     @Query("DELETE FROM Painting AS p WHERE p.uuid = :uuid AND p.isFavorite = false")

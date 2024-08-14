@@ -16,11 +16,13 @@ public class HomeController {
 
     @GetMapping
     public String home(HttpSession httpSession, Model model) {
-        if (httpSession.getAttribute("username") == null) {
+        Object username = httpSession.getAttribute("username");
+        if (username == null) {
             return "index";
         }
 
-        model.addAttribute("ownPaintings", paintingService.getAllByUsername(String.valueOf(httpSession.getAttribute("username"))));
+        model.addAttribute("ownPaintings", paintingService.getAllByUsername(String.valueOf(username)));
+        model.addAttribute("othersPaintings", this.paintingService.getOthersPaintings(String.valueOf(username)));
         return "home";
     }
 }

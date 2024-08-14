@@ -13,6 +13,7 @@ public class PaintingDto {
     private String uuid;
     private String name;
     private UserDto author;
+    private UserDto owner;
     private String imageUrl;
     private Style style;
 }

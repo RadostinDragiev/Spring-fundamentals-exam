@@ -28,7 +28,7 @@
                         <table class="table table-striped table-dark">
                             <tr class="my-paintings" th:each="p : ${ownPaintings}">
                                 <td scope="row" style="width: 5%">
-                                    <img class="mr-2 " th:src="${p.imageUrl}" th:alt="${p.name}" width="35px"
+                                    <img class="mr-2 " th:src="${p.imageUrl}" th:alt="${p.imageUrl}" width="35px"
                                          height="35px">
                                 <td>
                                 <td th:text="*{p.name}"></td>
@@ -38,7 +38,6 @@
                                     <form th:action="@{/paintings/remove/{id}(id=*{p.uuid})}" method="post">
                                         <button type="submit" class="btn btn-danger">Delete</button>
                                     </form>
-
                                 <td>
                             <tr>
                         </table>
@@ -74,25 +73,28 @@
             <div class="col-6 mt-1 mb-1">
                 <div class="home-fields" style="height: 58vh; overflow: auto">
                     <h3 class="my-paintings">Other Paintings</h3>
-                    <ul class="list-group list-group-vertical text-dark">              <!--//TODO-->
+                    <ul class="list-group list-group-vertical text-dark" th:each="p : ${othersPaintings}">              <!--//TODO-->
                         <!--<ul class="list-group list-group-vertical text-dark" th:each="..."-->
                         <li>
                             <div class="my-paintings-first-row">
                                 <div class="img1">
-                                    <img id="image" src="" alt="" width="75px"
+                                    <img id="image" th:src="${p.imageUrl}" th:alt="${p.imageUrl}" width="75px"
                                          height="75" style="padding-top: 0.3em; padding-left: 0.3em; margin-top: 2.3em">
                                 </div>
-                                <p id="names">{paintingName}</p>
-                                <p id="authors">by {author}</p>
+                                <p id="names" th:text="*{p.name}"></p>
+                                <p id="authors" th:text="'by ' + *{p.author.username}"></p>
                                 <div class="buttons-info">
                                 </div>
                             </div>
                             <div class="buttons-info">
                                 <div class="favorite">
-                                    <p><a class="btn-info btn">Favourite               <!--//TODO-->
-                                        <!--<a th:href="@{/paintings/add...">-->
-                                    </a>
-                                    </p>
+<!--                                    <p><a class="btn-info btn">Favourite               &lt;!&ndash;//TODO&ndash;&gt;-->
+<!--                                        &lt;!&ndash;<a th:href="@{/paintings/add...">&ndash;&gt;-->
+<!--                                    </a>-->
+<!--                                    </p>-->
+                                    <form th:action="@{/paintings/vote/addFavorite/{id}(id=*{p.uuid})}" method="post">
+                                        <button type="submit" class="btn-info btn">Favourite</button>
+                                    </form>
                                 </div>
                                 <div class="rate">
                                     <p><a class="btn-primary btn">Vote                 <!--//TODO-->
@@ -102,8 +104,8 @@
                                 </div>
                             </div>
                             <div class="second-info">
-                                <p>Style: {styleName}</p>
-                                <p>Added by {ownerUsername}</p>
+                                <p th:text="'Style: ' + *{p.style.name}"></p>
+                                <p th:text="'Added by ' + *{p.owner.username}"></p>
                             </div>
                         </li>
                     </ul>

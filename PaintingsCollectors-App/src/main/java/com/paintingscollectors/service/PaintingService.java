@@ -9,7 +9,11 @@ public interface PaintingService {
 
     void addPainting(AddPaintingDto addPaintingDto);
 
+    void addToFavorite(String username, String paintingUUID);
+
     List<PaintingDto> getAllByUsername(String username);
+
+    List<PaintingDto> getOthersPaintings(String username);
 
     void removePainting(String uuid);
 }

@@ -44,9 +44,25 @@ public class PaintingServiceImpl implements PaintingService {
     }
 
     @Override
+    public void addToFavorite(String username, String paintingUUID) {
+        Painting painting = this.paintingRepository.findById(paintingUUID).orElse(null);
+        if (painting != null && !painting.getAuthor().getUsername().equals(username)) {
+            painting.setFavorite(true);
+            this.userService.addFavoritePainting(username, painting);
+        }
+    }
+
+    @Override
     public List<PaintingDto> getAllByUsername(String username) {
         return Arrays.stream(this.modelMapper
                         .map(this.paintingRepository.findAllByAuthorUsername(username), PaintingDto[].class))
+                .toList();
+    }
+
+    @Override
+    public List<PaintingDto> getOthersPaintings(String username) {
+        return Arrays.stream(this.modelMapper
+                        .map(this.paintingRepository.findAllByAuthorUsernameIsNot(username), PaintingDto[].class))
                 .toList();
     }
 
