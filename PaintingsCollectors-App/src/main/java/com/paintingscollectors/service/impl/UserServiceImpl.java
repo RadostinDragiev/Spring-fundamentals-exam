@@ -2,6 +2,7 @@ package com.paintingscollectors.service.impl;
 
 import com.paintingscollectors.model.dto.AuthUserDto;
 import com.paintingscollectors.model.dto.LoggedUserDto;
+import com.paintingscollectors.model.dto.RegisterUserDto;
 import com.paintingscollectors.model.entity.User;
 import com.paintingscollectors.repository.UserRepository;
 import com.paintingscollectors.service.UserService;
@@ -26,5 +27,12 @@ public class UserServiceImpl implements UserService {
                 .orElse(null);
 //                .orElseThrow(EntityNotFoundException::new);
         return user != null ? this.modelMapper.map(user, LoggedUserDto.class) : null;
+    }
+
+    @Override
+    public boolean registerUser(RegisterUserDto registerUserDto) {
+        User newUser = this.modelMapper.map(registerUserDto, User.class);
+        this.userRepository.saveAndFlush(newUser);
+        return true;
     }
 }

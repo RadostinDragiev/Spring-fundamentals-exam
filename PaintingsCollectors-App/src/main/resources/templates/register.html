@@ -6,7 +6,7 @@
 <header th:replace="fragments/commons::nav"></header>
 <main>
 
-    <form class="welcome login" method="" action="/">
+    <form class="welcome login" method="POST" action="/auth/register">
         <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Register</span></h1>
         <div class="form-group">
             <div class="label-holder textCol d-flex justify-content-center">
@@ -14,7 +14,7 @@
             </div>
 
             <input type="text" class="form-control" id="username" name="username"/>
-            <small class="danger" style="font-size: 15px">Username error message</small>
+            <small class="danger" style="font-size: 15px" th:if="${#session.getAttribute('usernameErr')}" th:text="${#session.getAttribute('usernameErr')}"/>
         </div>
 
         <div class="form-group">
@@ -22,7 +22,7 @@
                 <label for="email" class="h4 mb-2">Email</label>
             </div>
             <input type="email" class="form-control" id="email" name="email"/>
-            <small class="danger">Email error message</small>
+            <small class="danger" th:if="${#session.getAttribute('emailErr')}" th:text="${#session.getAttribute('emailErr')}"/>
         </div>
 
         <div class="form-group">
@@ -30,7 +30,7 @@
                 <label for="password" class="h4 mb-2">Password</label>
             </div>
             <input type="password" class="form-control" id="password" name="password"/>
-            <small class="danger">Password error message</small>
+            <small class="danger" th:if="${#session.getAttribute('passwordErr')}" th:text="${#session.getAttribute('passwordErr')}"/>
         </div>
 
         <div class="form-group">
@@ -38,7 +38,7 @@
                 <label for="confirmPassword" class="h4 mb-2">Confirm Password</label>
             </div>
             <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"/>
-            <small class="danger">Password error message</small>
+            <small class="danger" th:if="${#session.getAttribute('confirmPasswordErr')}" th:text="${#session.getAttribute('confirmPasswordErr')}"/>
         </div>
 
         <div class="button-holder d-flex justify-content-center">

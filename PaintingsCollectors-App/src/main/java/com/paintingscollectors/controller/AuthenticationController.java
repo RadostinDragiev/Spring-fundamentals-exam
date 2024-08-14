@@ -2,10 +2,12 @@ package com.paintingscollectors.controller;
 
 import com.paintingscollectors.model.dto.AuthUserDto;
 import com.paintingscollectors.model.dto.LoggedUserDto;
+import com.paintingscollectors.model.dto.RegisterUserDto;
 import com.paintingscollectors.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -44,6 +46,29 @@ public class AuthenticationController {
 
         httpSession.setAttribute("username", user.getUsername());
         return "home";
+    }
+
+    @GetMapping("/register")
+    public String registerPage(HttpSession httpSession, RegisterUserDto registerUserDto) {
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String register(@Valid @ModelAttribute("registerUserDto") RegisterUserDto registerUserDto, BindingResult bindingResult, HttpSession httpSession) {
+        if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors()
+                    .forEach(err -> {
+                        FieldError fieldError = (FieldError) err;
+                        httpSession.setAttribute(fieldError.getField() + "Err", fieldError.getDefaultMessage());
+                    });
+            return "redirect:/auth/register";
+        }
+
+        boolean isUserRegister = this.userService.registerUser(registerUserDto);
+        if (!isUserRegister) {
+            return "redirect:/auth/register";
+        }
+        return "redirect:/auth/login";
     }
 
     @RequestMapping("/logout")
