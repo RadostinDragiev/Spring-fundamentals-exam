@@ -5,10 +5,14 @@
 <body>
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
-    <form class="welcome login" action="/" method="post">
+    <form class="welcome login" th:action="@{/auth/login}" th:method="post", th:object="${authenticateUserDto}">
 
-        <div class="bg-danger text-light rounded">Error messages</div>
-        <div class="bg-danger text-light rounded">Incorrect username or password!</div>
+        <div class="bg-danger text-light rounded">
+            <ul>
+                <li th:each="err : ${#fields.detailedErrors()}" th:text="${err.getMessage()}"></li>
+            </ul>
+        </div>
+        <div class="bg-danger text-light rounded" th:if="${userNotFound}">Incorrect username or password!</div>
         <div class="form-group">
             <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Login</span></h1>
             <div class="label-holder text-white d-flex justify-content-center">
