@@ -33,8 +33,8 @@
                 <div>
                     <div class="home-fields" style="height: 39vh; overflow: auto">
                         <h3 class="my-stamps">My Purchases</h3>
-                        <div class="bought" th:each="s : ${purchased}">
-                            <div>
+                        <div class="bought" >
+                            <div th:each="s : ${purchased}">
                                 <div class="stamp" >
                                     <div class="item">
                                         <img th:src="${s.imageUrl}" th:alt="${s.imageUrl}" width="100px"
