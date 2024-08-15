@@ -24,7 +24,7 @@ public class User extends BaseEntity {
     private String email;
 
     // TODO: Delete when logout
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private Set<Stamp> wishedStamps;
 
     @ManyToMany

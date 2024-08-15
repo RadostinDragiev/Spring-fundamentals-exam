@@ -3,12 +3,15 @@ package com.philately.service.impl;
 import com.philately.config.UserSession;
 import com.philately.model.dto.AuthenticateUserDto;
 import com.philately.model.dto.RegisterUserDto;
+import com.philately.model.entity.Stamp;
 import com.philately.model.entity.User;
 import com.philately.repository.UserRepository;
+import com.philately.service.StampService;
 import com.philately.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -40,6 +43,13 @@ public class UserServiceImpl implements UserService {
     public void registerUser(RegisterUserDto registerUserDto) {
         User user = this.modelMapper.map(registerUserDto, User.class);
         this.userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    @Transactional
+    public void addStampToWishList(Stamp stamp) {
+        User user = getUserById(this.userSession.getId());
+        user.getWishedStamps().add(stamp);
     }
 
     @Override

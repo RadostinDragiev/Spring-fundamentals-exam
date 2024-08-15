@@ -12,19 +12,19 @@
                 <div>
                     <div class="home-fields" style="height: 40vh; overflow: auto">
                         <h3 class="my-stamps">My Stamps</h3>
-                        <table class="my-table table-striped table-dark" th:each="p : ${userOwnStamps}">
+                        <table class="my-table table-striped table-dark" th:each="s : ${userOwnStamps}">
                             <tr class="my-stamps">
                                 <td>
-                                    <img th:src="${p.imageUrl}" th:alt="${p.imageUrl}" width="70px"
+                                    <img th:src="${s.imageUrl}" th:alt="${s.imageUrl}" width="70px"
                                          height="70px">
                                 </td>
-                                <td style="text-align: start" th:text="'Name: ' + ${p.name}"></td>
-                                <td style="text-align: end; padding-right: 5px" th:text="'Description: ' + ${p.description}"></td>
+                                <td style="text-align: start" th:text="'Name: ' + ${s.name}"></td>
+                                <td style="text-align: end; padding-right: 5px" th:text="'Description: ' + ${s.description}"></td>
                             </tr>
                             <tr>
                                 <td>
-                                <td style="text-align: start" th:text="'Used paper: ' + ${p.paper.paperName}"></td>
-                                <td style="text-align: end; padding-right: 5px" th:text="'Price: ' + ${p.price}"></td>
+                                <td style="text-align: start" th:text="'Used paper: ' + ${s.paper.paperName}"></td>
+                                <td style="text-align: end; padding-right: 5px" th:text="'Price: ' + ${s.price}"></td>
                             </tr>
                         </table>
                     </div>
@@ -51,27 +51,29 @@
             <div class="col-6 mt-1 mb-1">
                 <div class="home-fields" style="height: 40vh; overflow: auto">
                     <h3 class="my-stamps">Offered Stamps</h3>
-                    <ul class="list-group list-group-vertical text-dark">
+                    <ul class="list-group list-group-vertical text-dark" th:each="s : ${othersStamps}">
                         <li>
                             <div class="my-stamps-first-row">
                                 <div class="img1">
-                                    <img id="image" width="85px" src="{stampImageUrl}" alt=""
+                                    <img id="image" width="85px" th:src="${s.imageUrl}" th:alt="${s.imageUrl}"
                                          height="85" style="padding-top: 0.3em; padding-left: 0.3em; margin-top: 2.3em">
                                 </div>
                                 <div class="stamp-info">
-                                    <p>Name: {stampName}</p>
-                                    <p>Description: {stampDescription}</p>
+                                    <p th:text="'Name: ' + ${s.name}"></p>
+                                    <p th:text="'Description: ' + ${s.description}"></p>
                                 </div>
                             </div>
                             <div class="buttons-info">
                                 <div class="favorite">
-                                    <p><a class="btn-outline-info btn">To Wishlist
-                                    </a>
+                                    <p>
+                                    <form th:action="@{/users/add-to-wishlist/{id}(id=*{s.uuid})}" method="post">
+                                        <button type="submit" class="btn-outline-info btn">To Wishlist</button>
+                                    </form>
                                     </p>
                                 </div>
                             </div>
                             <div class="second-info">
-                                <p>Added by: {stampOwner}</p>
+                                <p th:text="'Added by: ' + ${s.owner.username}"></p>
                                 <p></p>
                             </div>
                         </li>

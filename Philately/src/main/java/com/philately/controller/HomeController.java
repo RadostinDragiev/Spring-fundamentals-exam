@@ -22,6 +22,7 @@ public class HomeController {
         }
 
         model.addAttribute("userOwnStamps", this.stampService.getAllUserStamps(this.userSession.getId()));
+        model.addAttribute("othersStamps", this.stampService.getAllStampsByOthers(this.userSession.getId()));
         return "home";
     }
 }

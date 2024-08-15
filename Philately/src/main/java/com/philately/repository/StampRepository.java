@@ -10,4 +10,6 @@ import java.util.Set;
 public interface StampRepository extends JpaRepository<Stamp, String> {
 
     Set<Stamp> findAllByOwnerUuid(String ownerUUID);
+
+    Set<Stamp> findAllByOwnerUuidNot(String ownerUUID);
 }

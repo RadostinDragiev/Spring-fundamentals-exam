@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -40,9 +39,21 @@ public class StampServiceImpl implements StampService {
     }
 
     @Override
+    public Stamp getStampById(String stampUUID) {
+        return this.stampRepository.findById(stampUUID).orElse(new Stamp());
+    }
+
+    @Override
     public List<StampDetailsDto> getAllUserStamps(String userUUID) {
         return Arrays.stream(this.modelMapper
                         .map(this.stampRepository.findAllByOwnerUuid(userUUID), StampDetailsDto[].class))
+                .toList();
+    }
+
+    @Override
+    public List<StampDetailsDto> getAllStampsByOthers(String userUUID) {
+        return Arrays.stream(this.modelMapper
+                        .map(this.stampRepository.findAllByOwnerUuidNot(userUUID), StampDetailsDto[].class))
                 .toList();
     }
 }
