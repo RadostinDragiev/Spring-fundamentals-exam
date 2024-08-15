@@ -53,6 +53,17 @@ public class PaintingServiceImpl implements PaintingService {
     }
 
     @Override
+    public void addVote(String username, String paintingUUID) {
+        Painting painting = this.paintingRepository.findById(paintingUUID).orElse(null);
+        if (painting != null && !painting.getAuthor().getUsername().equals(username)) {
+            long votes = painting.getVotes() + 1;
+            painting.setVotes(votes);
+            this.userService.addVotePainting(username, painting);
+            this.paintingRepository.saveAndFlush(painting);
+        }
+    }
+
+    @Override
     public List<PaintingDto> getAllByUsername(String username) {
         return Arrays.stream(this.modelMapper
                         .map(this.paintingRepository.findAllByAuthorUsername(username), PaintingDto[].class))
@@ -74,7 +85,18 @@ public class PaintingServiceImpl implements PaintingService {
     }
 
     @Override
+    public List<PaintingDto> getMostRatedPaintings() {
+        return Arrays.stream(this.modelMapper
+                        .map(this.paintingRepository.findAllOrderByVotes(), PaintingDto[].class))
+                .toList();
+    }
+
+    @Override
     public void removePainting(String uuid) {
         this.paintingRepository.deleteByUUID(uuid);
+    }
+
+    @Override
+    public void removeVote(String username, String paintingUUID) {
     }
 }

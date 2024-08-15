@@ -3,7 +3,7 @@ package com.paintingscollectors.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "paintings")
@@ -39,5 +39,5 @@ public class Painting extends BaseEntity {
     private long votes;
 
     @ManyToMany(mappedBy = "favoritePaintings", cascade = CascadeType.ALL)
-    private List<User> favoriteUsers;
+    private Set<User> favoriteUsers;
 }

@@ -16,4 +16,5 @@ public class PaintingDto {
     private UserDto owner;
     private String imageUrl;
     private Style style;
+    private long votes;
 }

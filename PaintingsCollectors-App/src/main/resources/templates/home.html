@@ -87,14 +87,17 @@
                             </div>
                             <div class="buttons-info">
                                 <div class="favorite">
+                                    <p>
                                     <form th:action="@{/paintings/vote/addFavorite/{id}(id=*{p.uuid})}" method="post">
                                         <button type="submit" class="btn-info btn">Favourite</button>
                                     </form>
+                                    </p>
                                 </div>
                                 <div class="rate">
-                                    <p><a class="btn-primary btn">Vote                 <!--//TODO-->
-                                        <!-- <a th:href="@{/paintings/vote...">-->
-                                    </a>
+                                    <p>
+                                    <form th:action="@{/paintings/vote/{id}(id=*{p.uuid})}" method="post">
+                                        <button type="submit" class="btn-primary btn">Vote</button>
+                                    </form>
                                     </p>
                                 </div>
                             </div>
@@ -107,10 +110,10 @@
                 </div>
                 <div class="home-fields" style="height: 21vh; overflow: auto">
                     <h3 class="my-paintings">Most Rated Paintings</h3>
-                    <div class="most-rated">                                           <!--//TODO-->
+                    <div class="most-rated" th:each="p : ${mostVotedPaintings}">
                         <!--<div class="most-rated" th:each="..."-->
-                        <p>{paintingName} by {author}</p>
-                        <p>Number of votes: {votes}</p>
+                        <p th:text="*{p.name} + ' by: ' + *{p.author.username}"></p>
+                        <p th:text="'Number of votes: ' + *{p.votes}">Number of votes: {votes}</p>
                     </div>
                 </div>
             </div>

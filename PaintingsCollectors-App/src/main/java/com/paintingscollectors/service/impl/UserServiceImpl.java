@@ -45,4 +45,12 @@ public class UserServiceImpl implements UserService {
         user.getFavoritePaintings().add(painting);
         this.userRepository.saveAndFlush(user);
     }
+
+    @Override
+    @Transactional
+    public void addVotePainting(String username, Painting painting) {
+        User user = getUserByName(username);
+        user.getRatedPaintings().add(painting);
+        this.userRepository.saveAndFlush(user);
+    }
 }

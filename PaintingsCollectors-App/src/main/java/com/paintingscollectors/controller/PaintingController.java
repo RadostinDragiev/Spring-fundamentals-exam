@@ -55,6 +55,14 @@ public class PaintingController {
         return "redirect:/";
     }
 
+    @PostMapping("/vote/{paintingUUID}")
+    public String votePainting(@PathVariable String paintingUUID, HttpSession httpSession) {
+        String username = String.valueOf(httpSession.getAttribute("username"));
+
+        this.paintingService.addVote(username, paintingUUID);
+        return "redirect:/";
+    }
+
     @PostMapping("/remove/{paintingUUID}")
     public String removePainting(@PathVariable String paintingUUID, HttpSession httpSession) {
         this.paintingService.removePainting(paintingUUID);

@@ -18,6 +18,9 @@ public interface PaintingRepository extends JpaRepository<Painting, String> {
 
     List<Painting> findAllByFavoriteUsersUsername(String username);
 
+    @Query("SELECT p FROM Painting AS p ORDER BY p.votes DESC")
+    List<Painting> findAllOrderByVotes();
+
     @Modifying
     @Transactional
     @Query("DELETE FROM Painting AS p WHERE p.uuid = :uuid AND p.isFavorite = false")

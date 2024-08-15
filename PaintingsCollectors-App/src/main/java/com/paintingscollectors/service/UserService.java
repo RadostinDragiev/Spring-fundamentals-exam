@@ -15,4 +15,6 @@ public interface UserService {
     User getUserByName(String name);
 
     void addFavoritePainting(String username, Painting painting);
+
+    void addVotePainting(String username, Painting painting);
 }

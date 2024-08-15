@@ -24,6 +24,7 @@ public class HomeController {
         model.addAttribute("ownPaintings", this.paintingService.getAllByUsername(String.valueOf(username)));
         model.addAttribute("othersPaintings", this.paintingService.getOthersPaintings(String.valueOf(username)));
         model.addAttribute("ownFavoritePaintings", this.paintingService.getOwnFavoritePaintings(String.valueOf(username)));
+        model.addAttribute("mostVotedPaintings", this.paintingService.getMostRatedPaintings());
         return "home";
     }
 }
