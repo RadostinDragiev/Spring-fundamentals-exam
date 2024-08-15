@@ -26,7 +26,7 @@ public class Stamp extends BaseEntity {
     private int price;
 
     @Column(name = "image_url", nullable = false)
-    private String imageUr;
+    private String imageUrl;
 
     @ManyToOne
     @JoinColumn(name = "owner")

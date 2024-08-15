@@ -21,6 +21,11 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
 
     @Override
+    public User getUserById(String id) {
+        return this.userRepository.findById(id).orElse(new User());
+    }
+
+    @Override
     public boolean loginUser(AuthenticateUserDto authenticateUserDto) {
         Optional<User> user = this.userRepository.findUserByUsernameAndPassword(authenticateUserDto.getUsername(), authenticateUserDto.getPassword());
         if (user.isEmpty()) {
