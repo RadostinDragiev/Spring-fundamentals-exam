@@ -15,4 +15,8 @@ public interface StampService {
     List<StampDetailsDto> getAllUserStamps(String userUUID);
 
     List<StampDetailsDto> getAllStampsByOthers(String userUUID);
+
+    List<StampDetailsDto> getUsersWishlist();
+
+    List<StampDetailsDto> getAllPurchased();
 }

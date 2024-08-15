@@ -33,13 +33,13 @@
                 <div>
                     <div class="home-fields" style="height: 39vh; overflow: auto">
                         <h3 class="my-stamps">My Purchases</h3>
-                        <div class="bought">
+                        <div class="bought" th:each="s : ${purchased}">
                             <div>
-                                <div class="stamp">
+                                <div class="stamp" >
                                     <div class="item">
-                                        <img src="{stampImageUrl}" alt="" width="100px"
+                                        <img th:src="${s.imageUrl}" th:alt="${s.imageUrl}" width="100px"
                                              height="100px">
-                                        <p>{stampName}</p>
+                                        <p th:text="${s.name}"></p>
                                     </div>
                                 </div>
                             </div>
@@ -81,22 +81,26 @@
                 </div>
                 <div class="home-fields" style="height: 39vh; overflow: auto">
                     <h3 class="my-stamps">My Wishlist</h3>
-                    <div class="wish-list">
+                    <div class="wish-list"  th:each="s : ${wishlist}">
                         <table class="my-table">
                             <tr class="my-stamps">
-                                <td style="text-align: start; padding-left: 5px">{stampName}</td>
-                                <img src="{stampImageUrl}" alt="" width="55px"
+                                <td style="text-align: start; padding-left: 5px" th:text="${s.name}">{stampName}</td>
+                                <img th:src="${s.imageUrl}" th:alt="${s.imageUrl}" width="55px"
                                      height="55" style="padding-top: 0.3em; padding-left: 0.3em">
-                                <td style="text-align: end; padding-right: 5px">Price: {stampPrice} $</td>
+                                <td style="text-align: end; padding-right: 5px" th:text="'Price: ' + ${s.price}">Price: {stampPrice} $</td>
                                 <td style="width: 15%; padding-top: 8px; padding-right: 5px">
-                                    <a class="btn-danger btn">Remove</a>
+                                    <form th:action="@{/users/remove-from-wishlist/{id}(id=*{s.uuid})}" method="post">
+                                        <button type="submit" class="btn-danger btn">Remove</button>
+                                    </form>
                                 </td>
                             </tr>
                         </table>
                     </div>
                     <div class="buttons-info">
-                        <p style="margin-top: 10px"><a class="btn-info btn">Buy all
-                        </a>
+                        <p style="margin-top: 10px">
+                            <form th:action="@{/users/by-all}" method="post">
+                                <button type="submit" class="btn-info btn" th:if="${wishlist.size() > 0}">Buy all</button>
+                            </form>
                         </p>
                     </div>
                 </div>

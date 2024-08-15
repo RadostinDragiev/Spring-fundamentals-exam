@@ -23,4 +23,16 @@ public class UserController {
         this.userService.addStampToWishList(stamp);
         return "redirect:/";
     }
+
+    @PostMapping("/remove-from-wishlist/{stampUUID}")
+    public String removeFromWishlist(@PathVariable String stampUUID) {
+        this.userService.removeFromWishlist(stampUUID);
+        return "redirect:/";
+    }
+
+    @PostMapping("/by-all")
+    public String byAllStamps() {
+        this.userService.byAllStamps();
+        return "redirect:/";
+    }
 }

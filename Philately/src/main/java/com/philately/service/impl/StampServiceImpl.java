@@ -56,4 +56,18 @@ public class StampServiceImpl implements StampService {
                         .map(this.stampRepository.findAllByOwnerUuidNot(userUUID), StampDetailsDto[].class))
                 .toList();
     }
+
+    @Override
+    public List<StampDetailsDto> getUsersWishlist() {
+        return Arrays.stream(this.modelMapper
+                        .map(this.userService.getWishlist(), StampDetailsDto[].class))
+                .toList();
+    }
+
+    @Override
+    public List<StampDetailsDto> getAllPurchased() {
+        return Arrays.stream(this.modelMapper
+                        .map(this.userService.getPurchased(), StampDetailsDto[].class))
+                .toList();
+    }
 }

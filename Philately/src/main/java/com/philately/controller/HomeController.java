@@ -23,6 +23,8 @@ public class HomeController {
 
         model.addAttribute("userOwnStamps", this.stampService.getAllUserStamps(this.userSession.getId()));
         model.addAttribute("othersStamps", this.stampService.getAllStampsByOthers(this.userSession.getId()));
+        model.addAttribute("wishlist", this.stampService.getUsersWishlist());
+        model.addAttribute("purchased", this.stampService.getAllPurchased());
         return "home";
     }
 }

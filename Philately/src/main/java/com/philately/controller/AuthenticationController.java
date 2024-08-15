@@ -73,7 +73,6 @@ public class AuthenticationController {
 
     @GetMapping("/logout")
     public String logout() {
-        // TODO: delete all users wishedStamps;
         this.userService.logout();
         return "redirect:/";
     }

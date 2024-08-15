@@ -14,7 +14,7 @@
     <nav>
         <div class="home">
             <a href="/">Philately App</a>
-            <a href="/stamps/add-stamp">Add Stamp</a>
+            <a href="/stamps/add-stamp" th:if="${@userSession.isUserLogged()} == true">Add Stamp</a>
         </div>
         <div class="links">
             <li th:if="${@userSession.isUserLogged()} == false">
