@@ -19,7 +19,7 @@ public class UserSession {
     private String username;
 
     public boolean isUserLogged() {
-        return id == null;
+        return id != null;
     }
 
     public void login(String uuid, String username) {
@@ -28,7 +28,7 @@ public class UserSession {
     }
 
     public void logout() {
-        id = "";
+        id = null;
         username = "";
     }
 }

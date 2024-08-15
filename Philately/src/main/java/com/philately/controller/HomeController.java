@@ -1,6 +1,7 @@
 package com.philately.controller;
 
-import jakarta.servlet.http.HttpSession;
+import com.philately.config.UserSession;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,9 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class HomeController {
 
+    private final UserSession userSession;
+
     @GetMapping
-    public String homePage(HttpSession httpSession) {
-        if (httpSession.getAttribute("username") == null) {
+    public String homePage() {
+        if (!userSession.isUserLogged()) {
             return "index";
         }
 

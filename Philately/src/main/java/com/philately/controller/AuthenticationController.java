@@ -1,6 +1,7 @@
 package com.philately.controller;
 
 import com.philately.model.dto.AuthenticateUserDto;
+import com.philately.model.dto.RegisterUserDto;
 import com.philately.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,11 @@ public class AuthenticationController {
     @ModelAttribute("authenticateUserDto")
     public AuthenticateUserDto authenticateUserDto() {
         return new AuthenticateUserDto();
+    }
+
+    @ModelAttribute("registerUserDto")
+    public RegisterUserDto registerUserDto() {
+        return new RegisterUserDto();
     }
 
     @GetMapping("/login")
@@ -52,9 +58,23 @@ public class AuthenticationController {
         return "register";
     }
 
+    @PostMapping("/register")
+    public String registerUser(@Valid RegisterUserDto registerUserDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("registerUserDto", registerUserDto);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registerUserDto", bindingResult);
+            return "redirect:/auth/register";
+        }
+
+        this.userService.registerUser(registerUserDto);
+
+        return "redirect:/auth/login";
+    }
+
     @GetMapping("/logout")
     public String logout() {
         // TODO: delete all users wishedStamps;
+        this.userService.logout();
         return "redirect:/";
     }
 }

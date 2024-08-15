@@ -17,13 +17,13 @@
             <a href="/">Add Stamp</a>
         </div>
         <div class="links">
-            <li>
+            <li th:if="${@userSession.isUserLogged()} == false">
                 <a href="/auth/login">Login</a>
             </li>
-            <li>
+            <li th:if="${@userSession.isUserLogged()} == false">
                 <a href="/auth/register">Register</a>
             </li>
-            <li th:if="${@userSession.isUserLogged()} == false">
+            <li th:if="${@userSession.isUserLogged()} == true">
                 <a href="/auth/logout">Logout</a>
             </li>
         </div>
