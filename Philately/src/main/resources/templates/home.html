@@ -6,26 +6,25 @@
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
     <div class="welcome mt-1 mb-4">
-        <p class="mySticky bg-gray text-dark user">Welcome {loggedUser}</p>
+        <p class="mySticky bg-gray text-dark user" th:text="'Welcome ' + ${@userSession.getUsername()}"></p>
         <div class="row mt-1 mb-2">
             <div class="col-6 mt-1 mb-1">
                 <div>
                     <div class="home-fields" style="height: 40vh; overflow: auto">
                         <h3 class="my-stamps">My Stamps</h3>
-                        <table class="my-table table-striped table-dark">
+                        <table class="my-table table-striped table-dark" th:each="p : ${userOwnStamps}">
                             <tr class="my-stamps">
                                 <td>
-                                    <img src="" alt="" width="70px"
+                                    <img th:src="${p.imageUrl}" th:alt="${p.imageUrl}" width="70px"
                                          height="70px">
                                 </td>
-                                <td style="text-align: start">Name: {stampName}</td>
-                                <td style="text-align: end; padding-right: 5px">Description: {stampDescription}</td>
+                                <td style="text-align: start" th:text="'Name: ' + ${p.name}"></td>
+                                <td style="text-align: end; padding-right: 5px" th:text="'Description: ' + ${p.description}"></td>
                             </tr>
                             <tr>
                                 <td>
-                                <td style="text-align: start">Used paper: {stampPaper}</td>
-                                <td style="text-align: end; padding-right: 5px">Price: {stampsPrice}$
-                                </td>
+                                <td style="text-align: start" th:text="'Used paper: ' + ${p.paper.paperName}"></td>
+                                <td style="text-align: end; padding-right: 5px" th:text="'Price: ' + ${p.price}"></td>
                             </tr>
                         </table>
                     </div>

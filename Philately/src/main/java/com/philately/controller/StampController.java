@@ -46,6 +46,6 @@ public class StampController {
         }
 
         this.stampService.addStamp(addStampDto);
-        return "add-stamp";
+        return "redirect:/";
     }
 }
