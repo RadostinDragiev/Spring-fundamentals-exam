@@ -39,6 +39,10 @@ public class StampController {
 
     @PostMapping("/add-stamp")
     public String addStamp(@Valid AddStampDto addStampDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (!this.userSession.isUserLogged()) {
+            return "index";
+        }
+
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("addStampDto", addStampDto);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addStampDto", bindingResult);
